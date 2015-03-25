@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 
 
 public class FoobarControl extends Activity {
@@ -24,11 +25,19 @@ public class FoobarControl extends Activity {
     public void showNotification(View v)
     {
         Log.d("notif","before init");
+
+        RemoteViews widget = new RemoteViews(getPackageName(), R.layout.controlwidget);
+
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.notification)
                         .setContentTitle("My notification")
-                        .setContentText("Hello World!");
+                        .setContentText("Hello World!")
+                        .setContent(widget);
+
+
+
 
         NotificationManager notman = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         notman.notify(1,mBuilder.build());
