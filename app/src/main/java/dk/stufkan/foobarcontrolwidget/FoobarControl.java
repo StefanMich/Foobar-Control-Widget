@@ -1,6 +1,7 @@
 package dk.stufkan.foobarcontrolwidget;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -36,11 +37,14 @@ public class FoobarControl extends Activity {
                         .setContentText("Hello World!")
                         .setContent(widget);
 
+        Notification not = mBuilder.build();
 
+        not.bigContentView = widget;
 
 
         NotificationManager notman = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        notman.notify(1,mBuilder.build());
+
+        notman.notify(1,not);
     }
 
     @Override
