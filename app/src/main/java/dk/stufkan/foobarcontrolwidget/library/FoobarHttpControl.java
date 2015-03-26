@@ -10,9 +10,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 
-/**
- * Created by Stefan Micheelsen on 26-03-2015.
- */
 public class FoobarHttpControl {
 
     private void webrequest(String suffix)
