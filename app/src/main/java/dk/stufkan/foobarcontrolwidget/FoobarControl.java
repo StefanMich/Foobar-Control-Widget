@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RemoteViews;
 
+import dk.stufkan.foobarcontrolwidget.library.FoobarHttpControl;
+
 
 public class FoobarControl extends Activity {
 
@@ -23,9 +25,8 @@ public class FoobarControl extends Activity {
 
     }
 
-    public void showNotification(View v)
-    {
-        Log.d("notif","before init");
+    public void showNotification(View v) {
+        Log.d("notif", "before init");
 
         RemoteViews widget = new RemoteViews(getPackageName(), R.layout.controlwidget);
 
@@ -42,7 +43,10 @@ public class FoobarControl extends Activity {
         not.bigContentView = widget;
 
 
-        NotificationManager notman = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notman = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        notman.notify(1, not);
+    }
 
         notman.notify(1,not);
     }
