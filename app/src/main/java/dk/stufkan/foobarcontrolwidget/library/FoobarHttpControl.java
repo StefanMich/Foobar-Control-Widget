@@ -1,54 +1,48 @@
 package dk.stufkan.foobarcontrolwidget.library;
 
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 
 public class FoobarHttpControl {
     private String prefix;
+    ControlWebRequest control;
 
     public FoobarHttpControl(String prefix) {
         this.prefix = prefix;
+        control = new ControlWebRequest(prefix);
+
+        Log.d("foobarhttpcontrol", "constructor");
     }
 
-    private void webrequest(String suffix) {
-        String prefix = "192.168.1.4:8888";
-        String url = prefix + suffix;
 
-        HttpClient httpclient = new DefaultHttpClient();
-
-        // Prepare a request object
-        HttpGet httpget = new HttpGet(url);
-
-        try {
-            HttpResponse response = httpclient.execute(httpget);
-        } catch (IOException e) {
-            Log.d("foobarhttpcontrol", "Could not connect to " + prefix + "\nPlease check the IP and port and ensure that the host is able to accept connections");
-        }
-    }
 
     public void playPause() {
-        webrequest("?cmd=PlayOrPause&param1=");
+
+        control.execute("?cmd=PlayOrPause&param1=");
     }
 
     public void random() {
-        webrequest("?cmd=StartRandom&param1=");
+        control.execute("?cmd=StartRandom&param1=");
     }
 
     public void next() {
-        webrequest("?cmd=StartNext&param1=");
+        control.execute("?cmd=StartNext&param1=");
     }
 
     public void mute() {
-        webrequest("?cmd=VolumeMuteToggle");
+        control.execute("?cmd=VolumeMuteToggle");
     }
 
     public void volume(int value) {
-        webrequest("?cmd=Volume&param1=" + value);
+        control.execute("?cmd=Volume&param1=" + value);
     }
 }

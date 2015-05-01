@@ -48,7 +48,9 @@ public class FoobarControl extends Activity {
         notman.notify(1, not);
     }
 
-        notman.notify(1,not);
+    public void foobartest(View v) {
+        FoobarHttpControl fc = new FoobarHttpControl("http://192.168.1.46:8888/default/");
+        fc.playPause();
     }
 
     @Override
