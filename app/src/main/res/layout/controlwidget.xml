@@ -7,7 +7,7 @@
     <ImageButton
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:id="@+id/imageButton3"
+        android:id="@+id/back"
         android:src="@drawable/back"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
@@ -18,7 +18,7 @@
     <ImageButton
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:id="@+id/imageButton2"
+        android:id="@+id/play"
         android:src="@drawable/play"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
@@ -29,8 +29,8 @@
     <ImageButton
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:id="@+id/imageButton"
-        android:src="@drawable/back"
+        android:id="@+id/forward"
+        android:src="@drawable/forward"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"
         android:layout_gravity="right"

@@ -3,6 +3,9 @@ package dk.stufkan.foobarcontrolwidget;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -28,8 +31,14 @@ public class FoobarControl extends Activity {
     public void showNotification(View v) {
         Log.d("notif", "before init");
 
-        RemoteViews widget = new RemoteViews(getPackageName(), R.layout.controlwidget);
+        Intent Play = new Intent(this, FoobarHttpControl.class);
+        Play.putExtra("action", "playPause");
+        Play.putExtra("prefix", "http://192.168.1.4:8888/default/");
+        PendingIntent piPlay = PendingIntent.getBroadcast(this, 2, Play, PendingIntent.FLAG_UPDATE_CURRENT);
 
+
+        RemoteViews widget = new RemoteViews(getPackageName(), R.layout.controlwidget);
+        widget.setOnClickPendingIntent(R.id.play,piPlay);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -48,10 +57,6 @@ public class FoobarControl extends Activity {
         notman.notify(1, not);
     }
 
-    public void foobartest(View v) {
-        FoobarHttpControl fc = new FoobarHttpControl("http://192.168.1.46:8888/default/");
-        fc.playPause();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
