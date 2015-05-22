@@ -7,8 +7,8 @@
     <ImageButton
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:id="@+id/back"
-        android:src="@drawable/back"
+        android:id="@+id/random"
+        android:src="@drawable/random"
         android:scaleType="fitCenter"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/transparent"
@@ -29,8 +29,8 @@
     <ImageButton
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:id="@+id/forward"
-        android:src="@drawable/forward"
+        android:id="@+id/next"
+        android:src="@drawable/next"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"
         android:layout_gravity="right"

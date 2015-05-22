@@ -30,12 +30,14 @@ public class FoobarControl extends Activity {
         Log.d("notif", "before init");
 
         PendingIntent piPlay = getControlPendingIntent(FoobarHttpControl.Control.play,1);
-        PendingIntent piBack = getControlPendingIntent(FoobarHttpControl.Control.next,2);
-        PendingIntent piForward = getControlPendingIntent(FoobarHttpControl.Control.random,3);
+        PendingIntent piNext = getControlPendingIntent(FoobarHttpControl.Control.next,2);
+        PendingIntent piRandom = getControlPendingIntent(FoobarHttpControl.Control.random,3);
 
 
         RemoteViews widget = new RemoteViews(getPackageName(), R.layout.controlwidget);
         widget.setOnClickPendingIntent(R.id.play,piPlay);
+        widget.setOnClickPendingIntent(R.id.next,piNext);
+        widget.setOnClickPendingIntent(R.id.random,piRandom);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
