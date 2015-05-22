@@ -1,6 +1,7 @@
 package dk.stufkan.foobarcontrolwidget.library;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -49,14 +50,21 @@ public class FoobarHttpControl extends BroadcastReceiver {
         Log.d(TAG, "onReceive");
         Bundle extras = intent.getExtras();
 
-        String action = extras.getString("action");
+        Control action = (Control)extras.getSerializable("action");
         String prefix = extras.getString("prefix");
 
         control = new ControlWebRequest(prefix);
 
         Log.d(TAG, "Indhold " + action + " " + prefix);
-        if (action.equals("playPause")) {
-            playPause();
+
+        switch (action ){
+            case play: playPause(); break;
+            case next: next();break;
+            case random:random();break;
+            case mute:mute();break;
         }
+
     }
+
+    public enum Control{play,next,random,mute};
 }

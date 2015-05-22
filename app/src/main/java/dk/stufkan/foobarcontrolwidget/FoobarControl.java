@@ -5,14 +5,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RemoteViews;
 
 import dk.stufkan.foobarcontrolwidget.library.FoobarHttpControl;
@@ -31,10 +29,9 @@ public class FoobarControl extends Activity {
     public void showNotification(View v) {
         Log.d("notif", "before init");
 
-        Intent Play = new Intent(this, FoobarHttpControl.class);
-        Play.putExtra("action", "playPause");
-        Play.putExtra("prefix", "http://192.168.1.4:8888/default/");
-        PendingIntent piPlay = PendingIntent.getBroadcast(this, 2, Play, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piPlay = getControlPendingIntent(FoobarHttpControl.Control.play,1);
+        PendingIntent piBack = getControlPendingIntent(FoobarHttpControl.Control.next,2);
+        PendingIntent piForward = getControlPendingIntent(FoobarHttpControl.Control.random,3);
 
 
         RemoteViews widget = new RemoteViews(getPackageName(), R.layout.controlwidget);
@@ -55,6 +52,13 @@ public class FoobarControl extends Activity {
         NotificationManager notman = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         notman.notify(1, not);
+    }
+
+    private PendingIntent getControlPendingIntent(FoobarHttpControl.Control action, int actioncode) {
+        Intent Play = new Intent(this, FoobarHttpControl.class);
+        Play.putExtra("action", action);
+        Play.putExtra("prefix", "http://192.168.1.4:8888/default/");
+        return PendingIntent.getBroadcast(this, actioncode, Play, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 
