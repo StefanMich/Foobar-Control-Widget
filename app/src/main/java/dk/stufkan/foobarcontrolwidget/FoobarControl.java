@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RemoteViews;
 
 import dk.stufkan.foobarcontrolwidget.library.FoobarHttpControl;
@@ -18,16 +23,46 @@ import dk.stufkan.foobarcontrolwidget.library.FoobarHttpControl;
 
 public class FoobarControl extends Activity {
 
+    String destination ="";
+    SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foobar_control);
+        sharedPref = this.getSharedPreferences(getString(R.string.appdir), Context.MODE_PRIVATE);
+
+
+        EditText et = (EditText)findViewById(R.id.editText);
+        Log.d("onCreate","for: " + destination);
+        destination = retrieveDestinationIPfromPreferences();
+        et.setText(destination);
+        Log.d("onCreate","efter: " +destination);
+
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                destination = s.toString();
+                Log.d("onCreate", destination);
+            }
+        });
 
 
     }
 
-    public void showNotification(View v) {
-        Log.d("notif", "before init");
+
+    public void showNotification(View v) { // method used by "button"
+       saveDestinationIPToPreferences();
 
         PendingIntent piPlay = getControlPendingIntent(FoobarHttpControl.Control.play,1);
         PendingIntent piNext = getControlPendingIntent(FoobarHttpControl.Control.next,2);
@@ -57,12 +92,21 @@ public class FoobarControl extends Activity {
     }
 
     private PendingIntent getControlPendingIntent(FoobarHttpControl.Control action, int actioncode) {
+
         Intent Play = new Intent(this, FoobarHttpControl.class);
         Play.putExtra("action", action);
-        Play.putExtra("prefix", "http://192.168.1.4:8888/default/");
+        Play.putExtra("prefix", "http://" + destination + "/default/");
         return PendingIntent.getBroadcast(this, actioncode, Play, PendingIntent.FLAG_UPDATE_CURRENT);
     }
+    public void saveDestinationIPToPreferences()
+    {
+        sharedPref.edit().putString(getString(R.string.savedIP), destination).apply();
+    }
 
+    public String retrieveDestinationIPfromPreferences()
+    {
+        return sharedPref.getString(getString(R.string.savedIP), "");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

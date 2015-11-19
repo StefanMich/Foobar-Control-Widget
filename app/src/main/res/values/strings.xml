@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Foobar Control Widget</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Indtast server IP:</string>
+    <string name="launch">Start notifikation</string>
     <string name="action_settings">Settings</string>
+    <string name="savedIP">savedIP</string>
+    <string name="appdir">dk.stufkan.foobarcontrolwidget</string>
 </resources>

@@ -55,7 +55,7 @@ public class FoobarHttpControl extends BroadcastReceiver {
 
         control = new ControlWebRequest(prefix);
 
-        Log.d(TAG, "Indhold " + action + " " + prefix);
+        Log.d(TAG,  action + " " + prefix);
 
         switch (action ){
             case play: playPause(); break;
