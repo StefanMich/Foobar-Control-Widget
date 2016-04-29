@@ -1,22 +1,12 @@
 package dk.stufkan.foobarcontrolwidget.library;
 
-import android.app.IntentService;
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.params.ConnRoutePNames;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.IOException;
+import dk.stufkan.foobarcontrolwidget.R;
 
 public class FoobarHttpControl extends BroadcastReceiver {
     String TAG = "FoobarHttpControl";
@@ -47,7 +37,7 @@ public class FoobarHttpControl extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "onReceive");
+        Log.d(TAG, "onReceive!");
         Bundle extras = intent.getExtras();
 
         Control action = (Control)extras.getSerializable("action");
@@ -67,4 +57,7 @@ public class FoobarHttpControl extends BroadcastReceiver {
     }
 
     public enum Control{play,next,random,mute};
+
+
 }
+

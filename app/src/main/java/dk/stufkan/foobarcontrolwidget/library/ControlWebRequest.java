@@ -3,12 +3,11 @@ package dk.stufkan.foobarcontrolwidget.library;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
 
 /**
  * Created by Stefan on 01-05-2015.
@@ -16,7 +15,9 @@ import java.io.IOException;
 public class ControlWebRequest extends AsyncTask<String, Void, Void> {
     private String prefix;
 
-    public ControlWebRequest(String prefix) {
+    public ControlWebRequest(String prefix)
+    {
+        Log.d("ControlWebRequest",prefix);
         this.prefix = prefix;
     }
 
@@ -28,18 +29,19 @@ public class ControlWebRequest extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... params) {
         String url = prefix + params[0];
-
-        HttpClient httpclient = new DefaultHttpClient();
-
-
-        //Log.d("foobarhttpcontrol",httpclient.getParams().getParameter(ConnRoutePNames.DEFAULT_PROXY).toString());
-
-        // Prepare a request object
-        HttpGet httpget = new HttpGet(url);
         Log.d("foobarhttpcontrol", url);
 
         try {
-            HttpResponse response = httpclient.execute(httpget);
+            URL commandUrl = new URL(url);
+            HttpURLConnection urlConnection = (HttpURLConnection) commandUrl.openConnection();
+
+            InputStream response = urlConnection.getInputStream();
+
+            try (Scanner scanner = new Scanner(response)) {
+                String responseBody = scanner.useDelimiter("\\A").next();
+                Log.d("foobarhttpcontrol",responseBody);
+            }
+
         } catch (IOException e) {
             Log.d("foobarhttpcontrol", "Could not connect to " + prefix + "\nPlease check the IP and port and ensure that the host is able to accept connections\n " + e.getMessage());
         }
